@@ -1,0 +1,16 @@
+{
+	"manifest_version": 2,
+	"name": "Clean New Tab",
+	"version": "2.1.0",
+	"permissions": ["storage", "unlimitedStorage"],
+	"description": "Customize Chrome's New Tab Page",
+	"web_accessible_resources": ["options.html", "options.css", "jquery.js", "welcome.html"],
+	"content_scripts": 
+	[
+		{
+			"matches": ["*://*.google.com/_/chrome/newtab*"], 
+			"js": ["jquery.js", "cleaner.js"],
+			"run_at": "document_end"  
+		}
+	]
+}

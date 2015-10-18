@@ -1,0 +1,107 @@
+#options-div {
+	height: 300px;
+	width: 400px;
+	position: absolute;
+	right: -245px;
+	bottom: -260px;
+	cursor: default;
+	transition: .2s;
+	opacity: 0;
+	font: 12px verdana;
+}
+
+#options-header {
+	height: 40px;
+	width: 400px;
+	background-color: #262626;
+	color: white;
+	font-weight: bold;
+}
+
+#header-text {
+	display: table-cell;
+	vertical-align: middle;
+	height: 40px;
+	padding-left: 10px;
+}
+
+#options-content {
+	height: 260px;
+	background-color: #F2F2F2;
+	padding: 10px;
+	color: #262626;
+}
+
+#options-content #hr {
+	height: 0;
+	margin: 15px 0;
+	content: '';
+	border-bottom: 1px solid #999;
+}
+
+#options-content label {
+	display: block;
+	position: relative;
+}
+
+#options-content input {
+  vertical-align: middle;
+}
+
+#options-content #slider {
+  margin-top: 5px;
+}
+
+#options-div:hover {
+	opacity: 1;
+}
+
+#options-div.active {
+	bottom: 0px;
+	right: 20px;
+	opacity: 1;
+}
+
+/* ------------------------------------------------------------------------------- */
+
+.unselectable {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	cursor: default;
+}
+
+#welcome-div, #close-div {
+	position: absolute;
+	width: 220px;
+	padding: 10px;
+	color: white;
+	background-color: #262626;
+	display: none;
+}
+
+#welcome-div {
+	right: 40px;
+	bottom: 100px;
+}
+
+#close-div {
+	right: 300px;
+	bottom: 300px;
+}
+
+.cleaner-close-button {
+	cursor: pointer;
+	float: right;
+	height: 15px;
+	width: 15px;
+	padding-left: 5px;
+	padding-bottom: 5px;
+	margin-right: -12px;
+	margin-top: -10px;
+	color: white;
+	border-left: 1px solid #F2F2F2;
+	border-bottom: 1px solid #F2F2F2;
+}
