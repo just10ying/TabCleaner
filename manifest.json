@@ -4,7 +4,7 @@
 	"version": "2.1.0",
 	"permissions": ["storage", "unlimitedStorage"],
 	"description": "Customize Chrome's New Tab Page",
-	"web_accessible_resources": ["options.html", "options.css", "jquery.js", "welcome.html"],
+	"web_accessible_resources": ["options.html", "options.css", "welcome.html"],
 	"content_scripts": 
 	[
 		{

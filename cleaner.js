@@ -1,45 +1,44 @@
+// Define constants:
+var CONSTANTS = {
+	OPTIONS_HTML_URL: chrome.extension.getURL("options.html"),
+	WELCOME_HTML_URL: chrome.extension.getURL("welcome.html"),
+	CSS_URL: chrome.extension.getURL("options.css"),
+	LOCAL_IMAGE_STRING: "Local Image"
+};
+
 // INITIALIZATION: Perform these actions before document ready to ensure that the UI does not change after it is visible.
 init();
 
-var fullImageName; // A copy of the image name in case it is longer than 512KB.
-
 function init() {
-	$("html").first().css("height", "100%");
-	$("html").first().css("overflow", "hidden");
+	load_css(CONSTANTS.CSS_URL);
 	$("body").prepend("<div id='spacer' style='margin-top:10%'></div>");
 	$("html").click(function(event) {
+		// If anywhere outside of the options div is clicked, remove the class "active," which hides the div.
 		if (!$("#options-div").find(event.target).length) {
 			$("#options-div").removeClass("active");
 			var hint = $("#close-div");
 			if ((hint.length > 0) && (hint.css("display") != "none")) hint.remove();
 		}
 	});
-	load_css();
-	load_js();
+	
 	create_options_button();
 	show_welcome();
 }
 
-function load_css() {
-	var link = document.createElement('link');
-	link.setAttribute('rel', 'stylesheet');
-	link.setAttribute('type', 'text/css');
-	link.setAttribute('href', chrome.extension.getURL('options.css'));
-	document.getElementsByTagName('head')[0].appendChild(link);
-}
-
-function load_js() {
-	var jquery = document.createElement('script');
-	jquery.setAttribute('src', chrome.extension.getURL('jquery.js'));
-	document.getElementsByTagName('body')[0].appendChild(jquery);
+function load_css(url) {
+	var link = document.createElement("link");
+	link.setAttribute("rel", "stylesheet");
+	link.setAttribute("type", "text/css");
+	link.setAttribute("href", url);
+	document.head.appendChild(link);
 }
 
 function create_options_button() {
-	$.ajax(chrome.extension.getURL("options.html")).done(function(data) {
-		$("html").first().append($(data)); // Append the options panel to the DOM.
+	$.ajax(CONSTANTS.OPTIONS_HTML_URL).done(function(data) {
+		$("html").first().append(data); // Create a DOM object out of the returned data and append the options panel to the DOM.
 		// Open the options menu when the button is clicked.
 		$("#options-header").click(function(event) {
-			$('#options-div').toggleClass('active');
+			$("#options-div").toggleClass("active");
 			if ($("#welcome-div").length) {
 				$("#welcome-div").remove();
 				$("#close-div").show();
@@ -58,7 +57,7 @@ function create_options_button() {
 		});
 		// Allow the user to press enter to reload a custom image
 		$("#BgImage").keyup(function (e) {
-			if (e.keyCode == 13) {
+			if (e.keyCode == 13) { // Enter automatically refreshes the DOM.
 				save_options();
 				restore_options();
 			}
@@ -66,22 +65,22 @@ function create_options_button() {
 				$("#BgImage").val("");
 			}
 		});
+		// Pressing "apply" also refreshes the DOM.
 		$("#ApplyBgImage").click(function() {
 			save_options();
 			restore_options();
 		});
+		// When the user selects a local image:
 		$("#BrowseImage").change(function(evt) {
 			// From Stackoverflow
 			var tgt = evt.target || window.event.srcElement;
-			var filename = evt.target.value;
         	var files = tgt.files;
 			
 			if (FileReader && files && files.length) {
 		        var fr = new FileReader();
 		        fr.onload = function () {
 					$("html").first().css("background-image", "url('" + fr.result + "')");
-					$("#BgImage").val("Local Image");
-					fullImageName = fr.result;
+					$("#BgImage").val(CONSTANTS.LOCAL_IMAGE_STRING); // Remember that the user selected a local image.
 					save_options();
 		        }
 		        fr.readAsDataURL(files[0]);
@@ -93,18 +92,19 @@ function create_options_button() {
 
 // Saves options to chrome.storage
 function save_options() {
-	var bgValue = document.getElementById('BgImage').value;
-	if (bgValue == "Local Image") {
-		bgValue = fullImageName;
+	var bgValue = document.getElementById("BgImage").value;
+	if (bgValue == CONSTANTS.LOCAL_IMAGE_STRING) {
+		var cssBgString = $("html").first().css("background-image");
+		bgValue = cssBgString.substring(4, cssBgString.length - 1); // Remove "url(' and the the ending )
 	}
 	
 	chrome.storage.local.set({
-		ShowPlus: document.getElementById('ShowPlus').checked,
-		ShowGoogleLogo: document.getElementById('ShowGoogleLogo').checked,
-		ShowSearchBar: document.getElementById('ShowSearchBar').checked,
-		ShowPages: document.getElementById('ShowPages').checked,
-		ShowInfo: document.getElementById('ShowInfo').checked,
-		VisitedOpacity: document.getElementById('Opacity').value / 100,
+		ShowPlus: document.getElementById("ShowPlus").checked,
+		ShowGoogleLogo: document.getElementById("ShowGoogleLogo").checked,
+		ShowSearchBar: document.getElementById("ShowSearchBar").checked,
+		ShowPages: document.getElementById("ShowPages").checked,
+		ShowInfo: document.getElementById("ShowInfo").checked,
+		VisitedOpacity: document.getElementById("Opacity").value / 100,
 		BgImagePath: bgValue
 	});
 }
@@ -123,17 +123,16 @@ function restore_options() {
 		// Restore Preferences
 		var bgValue = items.BgImagePath;
 		if (bgValue.indexOf("data:image") != -1) {
-			fullImageName = bgValue;
-			bgValue = "Local Image";
+			bgValue = CONSTANTS.LOCAL_IMAGE_STRING;
 		}
 		
-		document.getElementById('ShowPlus').checked = items.ShowPlus;
-		document.getElementById('ShowGoogleLogo').checked = items.ShowGoogleLogo;
-		document.getElementById('ShowSearchBar').checked = items.ShowSearchBar;
-		document.getElementById('ShowPages').checked = items.ShowPages;
-		document.getElementById('ShowInfo').checked = items.ShowInfo;
-		document.getElementById('Opacity').value = items.VisitedOpacity * 100;
-		document.getElementById('BgImage').value = bgValue;
+		document.getElementById("ShowPlus").checked = items.ShowPlus;
+		document.getElementById("ShowGoogleLogo").checked = items.ShowGoogleLogo;
+		document.getElementById("ShowSearchBar").checked = items.ShowSearchBar;
+		document.getElementById("ShowPages").checked = items.ShowPages;
+		document.getElementById("ShowInfo").checked = items.ShowInfo;
+		document.getElementById("Opacity").value = items.VisitedOpacity * 100;
+		document.getElementById("BgImage").value = bgValue;
 		
 		// Hide requested items.
 		if (items.ShowPlus) $("#mngb").show();
@@ -159,6 +158,8 @@ function restore_options() {
 		if (items.BgImagePath.length != 0) {
 			var self = this;
 			var initialLength = $("body").first().css("background").length;
+			// Chrome will set a white background a certain time AFTER document ready for some reason.
+			// This setInterval is meant to determine once Chrome has set this white background and to undo its effects.
 			var bgCheck = setInterval(function() {
 				if ($("body").first().css("background").length != self.initialLength) {
 					$("body").first().css("background", "rgba(0,0,0,0)");
@@ -181,9 +182,8 @@ function show_welcome() {
 		ShowTutorial: true
 	}, function(items) {
 		if (items.ShowTutorial) {
-		// if (true) {
 			// Load welcome module.
-			$.ajax(chrome.extension.getURL("welcome.html")).done(function(data) {
+			$.ajax(CONSTANTS.WELCOME_HTML_URL).done(function(data) {
 				$("html").first().append($(data));
 				$("#welcome-div").show();
 				$(".cleaner-close-button").click(function() {
