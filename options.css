@@ -5,12 +5,20 @@ html {
 
 #settings-icon-div {
 	position: absolute;
-	padding: 10px;
 	bottom: 0;
 	right: 0;
 	
+	width: 125px;
+	height: 125px;
+	
 	opacity: 0;
 	transition: .3s;
+}
+
+#settings-icon-div #open-settings {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
 }
 
 /*Override MDL button color:*/
@@ -56,16 +64,20 @@ html {
 	margin: 0;
 }
 
-#options-card .options-container:not(:last-of-type) {
-	border-bottom: 1px solid #686868;
+#options-card .options-container .header {
+	margin: auto;
 }
 
-#options-card #BrowseImage {
+#options-card .options-container:not(:last-of-type) {
+	border-bottom: 1px solid #888888;
+}
+
+#options-card #image-browse-input {
 	display: none;
 }
 
 #options-card .options-container .bg-text-input {
-	margin: -15px 0 15px 0;
+	/*margin: -15px 0 15px 0;*/
 }
 
 /* ------------------------------------------------------------------------------- */
@@ -85,13 +97,17 @@ html {
 }
 
 #welcome-div {
-	right: 40px;
-	bottom: 100px;
+	right: 10px;
+	bottom: 10px;
 }
 
 /* ------------------------------------------------------------------------------- */
 .cleaner-hint.mdl-card {
 	text-align: left;
+}
+
+.cleaner-hint .cleaner-close-button > a {
+	float: right;
 }
 
 .mdl-card a:hover {

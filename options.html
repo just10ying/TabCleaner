@@ -10,48 +10,48 @@
 	</div>
 	<div class="mdl-card__supporting-text">
 		<div class="options-container">
-			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ShowPlus">
-				<input type="checkbox" id="ShowPlus" class="mdl-checkbox__input refresh-on-change" />
+			<span class="header">Tab Content</span>
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-plus-checkbox">
+				<input type="checkbox" id="show-plus-checkbox" class="mdl-checkbox__input refresh-on-change" />
 				<span class="mdl-checkbox__label">Google Plus</span>
 			</label>
-			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ShowGoogleLogo">
-				<input type="checkbox" id="ShowGoogleLogo" class="refresh-on-change mdl-checkbox__input" />
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-logo-checkbox">
+				<input type="checkbox" id="show-logo-checkbox" class="refresh-on-change mdl-checkbox__input" />
 				<span class="mdl-checkbox__label">Logo</span>
 			</label>
-			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ShowSearchBar">
-				<input type="checkbox" id="ShowSearchBar" class="refresh-on-change mdl-checkbox__input" />
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-search-checkbox">
+				<input type="checkbox" id="show-search-checkbox" class="refresh-on-change mdl-checkbox__input" />
 				<span class="mdl-checkbox__label">Search</span>
 			</label>
-			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ShowPages">
-				<input type="checkbox" id="ShowPages" class="refresh-on-change mdl-checkbox__input" />
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-pages-checkbox">
+				<input type="checkbox" id="show-pages-checkbox" class="refresh-on-change mdl-checkbox__input" />
 				<span class="mdl-checkbox__label">Recent Pages</span>
 			</label>
-			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ShowInfo">
-				<input type="checkbox" id="ShowInfo" class="refresh-on-change mdl-checkbox__input" />
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-info-checkbox">
+				<input type="checkbox" id="show-info-checkbox" class="refresh-on-change mdl-checkbox__input" />
 				<span class="mdl-checkbox__label">Events</span>
 			</label>
 		</div>
 		<div class="options-container">
 			<div class="bg-text-input">
-				<form>
-					<div class="mdl-textfield mdl-js-textfield">
-						<input class="mdl-textfield__input" type="text" id="BgImage" />
-						<label class="mdl-textfield__label" for="BgImage">Background Image URL...</label>
-					</div>
-				</form>
+				<span class="header">Background Image</span>
+				<div class="mdl-textfield mdl-js-textfield">
+					<input class="mdl-textfield__input" type="text" id="bg-image-text" />
+					<label class="mdl-textfield__label" for="bg-image-text"></label>
+				</div>
 			</div>
 			<div class="bg-buttons">
-				<button class="mdl-button mdl-js-button">
+				<button id="choose-file-button" class="mdl-button mdl-js-button">
 					Choose File
 				</button>
-				<button id="ApplyBgImage" class="mdl-button mdl-js-button">
+				<button id="apply-bg-image" class="mdl-button mdl-js-button">
 					Apply
 				</button>
 			</div>
-			<input id="BrowseImage" type="file" value="Browse" />
+			<input id="image-browse-input" type="file" value="Browse" />
 		</div>
 		<div class="options-container">
-			<span>Recent Pages Opacity</span>
+			<span class="header">Recent Pages Opacity</span>
 			<input id="Opacity" class="refresh-on-change mdl-slider mdl-js-slider" type="range" min="0" max="100" value="100" tabindex="0"
 			/>
 		</div>
