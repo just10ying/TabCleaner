@@ -47,6 +47,10 @@ html {
 }
 
 #options-card.active {
+	bottom: -75px;
+}
+
+#options-card.active.full {
 	bottom: 0;
 }
 
@@ -72,7 +76,7 @@ html {
 }
 
 #options-card .options-container .body.background .mdl-textfield {
-	width: auto;
+	width: 85%;
 }
 
 #options-card .options-container .header {

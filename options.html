@@ -43,12 +43,33 @@
 		<div class="options-container mdl-card__actions mdl-card--border">
 			<span class="header">Background Image</span>
 			<div class="body background">
-				<button id="choose-file-button" class="mdl-button mdl-js-button">
-					Browse
+				<button id="clear-bg-button" class="mdl-button mdl-js-button mdl-button--icon">
+  					<i class="material-icons">clear</i>
 				</button>
+				<div class="mdl-tooltip" for="clear-bg-button">
+					Clear Background
+				</div>
+				<button id="choose-file-button" class="mdl-button mdl-js-button mdl-button--icon">
+  					<i class="material-icons">computer</i>
+				</button>
+				<div class="mdl-tooltip" for="choose-file-button">
+					Browse Local Images
+				</div>
+				<button id="choose-url-button" class="mdl-button mdl-js-button mdl-button--icon">
+  					<i class="material-icons">web</i>
+				</button>
+				<div class="mdl-tooltip" for="choose-url-button">
+					Enter Image URL
+				</div>
 				<div class="mdl-textfield mdl-js-textfield">
 					<input class="mdl-textfield__input" type="text" id="bg-image-text" />
 					<label class="mdl-textfield__label" for="bg-image-text"></label>
+				</div>
+				<button id="done-url-button" class="mdl-button mdl-js-button mdl-button--icon">
+  					<i class="material-icons">done</i>
+				</button>
+				<div class="mdl-tooltip" for="done-url-button">
+					Set Background
 				</div>
 				<input id="image-browse-input" type="file" value="Browse" />
 			</div>

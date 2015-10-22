@@ -55,13 +55,24 @@ function createOptionsButton() {
 				chrome.storage.sync.set({
 					ShowTutorial: false
 				});
-
 			}
 		});
 		$("#close-button").click(hideOptions);
 		$("#close-x").click(hideOptions);
 		$("#choose-file-button").click(selectLocalImage);
-		$("#apply-bg-image").click(applyBgImage);
+		$("#apply-bg-image").click(applyBgImage); // Pressing "apply" also refreshes the DOM.
+		$("#clear-bg-button").click(function() {
+			$("#bg-image-text").val("");
+			hideURLOptions();
+			applyBgImage();
+		});
+		$("#choose-url-button").click(function() {
+			showURLOptions();
+		});
+		$("#done-url-button").click(function() {
+			hideURLOptions();
+			applyBgImage();
+		});
 		// Save and refresh the DOM whenever the value changes.
 		$(".refresh-on-change").change(function() {
 			saveOptions();
@@ -76,11 +87,6 @@ function createOptionsButton() {
 				saveOptions();
 				restoreOptions();
 			}
-		});
-		// Pressing "apply" also refreshes the DOM.
-		$("#apply-bg-image").click(function () {
-			saveOptions();
-			restoreOptions();
 		});
 		// When the user selects a local image:
 		$("#image-browse-input").change(function (evt) {
@@ -189,6 +195,7 @@ function restoreOptions() {
 }
 
 function selectLocalImage() {
+	hideURLOptions();
 	$("#image-browse-input").trigger("click");
 }
 
@@ -224,4 +231,13 @@ function showOptions() {
 
 function hideOptions() {
 	$("#options-card").removeClass("active");
+	hideURLOptions();
+}
+
+function showURLOptions() {
+	$("#options-card").addClass("full");
+}
+
+function hideURLOptions() {
+	$("#options-card").removeClass("full");
 }
