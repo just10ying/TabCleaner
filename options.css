@@ -84,6 +84,18 @@ html {
 	margin-left: -5px;
 }
 
+#options-card.active #https-required-message {
+	display: none;
+}
+
+/*FIX THIS: ARBITRARY PADDING.  CENTER PROPERLY*/
+#options-card.active.full #https-required-message {
+	display: inline;
+	float: right;
+	padding-top: 8px; 
+	color: red;
+}
+
 #options-card #image-browse-input {
 	display: none;
 }

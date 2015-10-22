@@ -61,14 +61,17 @@
 				<div class="mdl-tooltip" for="choose-url-button">
 					Enter Image URL
 				</div>
+				<span id="https-required-message">
+					URL must be HTTPS!
+				</span>
 				<div class="mdl-textfield mdl-js-textfield">
 					<input class="mdl-textfield__input" type="text" id="bg-image-text" />
-					<label class="mdl-textfield__label" for="bg-image-text"></label>
+					<label class="mdl-textfield__label" for="bg-image-text">Enter web address (https):</label>
 				</div>
-				<button id="done-url-button" class="mdl-button mdl-js-button mdl-button--icon">
+				<button id="done-url-button" class="mdl-button mdl-js-button mdl-button--icon" disabled>
   					<i class="material-icons">done</i>
 				</button>
-				<div class="mdl-tooltip" for="done-url-button">
+				<div id="url-background-tooltip" class="mdl-tooltip" for="done-url-button">
 					Set Background
 				</div>
 				<input id="image-browse-input" type="file" value="Browse" />

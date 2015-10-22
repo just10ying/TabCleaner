@@ -6,7 +6,9 @@ var CONSTANTS = {
 	JQUERY_JS_URL: chrome.extension.getURL('third_party/jquery.js'),
 	MDL_ICON_CSS_URL: chrome.extension.getURL("third_party/icon.css"),
 	MDL_CSS_URL: chrome.extension.getURL("third_party/material.css"),
-	LOCAL_IMAGE_STRING: "Local Image"
+	LOCAL_IMAGE_STRING: "Local Image",
+	HTTPS_REQUIRED_STRING: "Image must be loaded over https.  Try appending https:// or changing http to https.",
+	HTTPS_OK_STRING: "Set Background"
 };
 
 // INITIALIZATION: Perform these actions before document ready to ensure that the UI does not change after it is visible.
@@ -86,6 +88,15 @@ function createOptionsButton() {
 			else if (e.keyCode == 13) {
 				saveOptions();
 				restoreOptions();
+			}
+			// Check if https:
+			if ($("#bg-image-text").val().indexOf("https://") < 0) {
+				$("#done-url-button").prop("disabled", true); // Prevent user from setting the background.
+				$("#https-required-message").show();
+			}
+			else {
+				$("#done-url-button").prop("disabled", false); // Allow user to set the background.
+				$("#https-required-message").hide();
 			}
 		});
 		// When the user selects a local image:
@@ -240,4 +251,5 @@ function showURLOptions() {
 
 function hideURLOptions() {
 	$("#options-card").removeClass("full");
+	$("#https-required-message").hide();
 }
