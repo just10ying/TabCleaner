@@ -1,43 +1,86 @@
-﻿<div id="options-div" class="unselectable">
-	<div id="options-header">
-		<div id="header-text">Tab Cleaner Options</div>
+﻿<div id="settings-icon-div">
+	<button id="open-settings" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+		<i class="material-icons">settings</i>
+	</button>
+</div>
+
+<div id="options-card" class="demo-card-wide mdl-card mdl-shadow--2dp unselectable">
+	<div class="mdl-card__title">
+		<h2 class="mdl-card__title-text">Settings</h2>
 	</div>
-
-	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ShowPlus">
-  		<input type="checkbox" id="ShowPlus" class="mdl-checkbox__input refresh-on-change" />
-		<span class="mdl-checkbox__label">Google Plus</span>
-	</label>
-
-	<div id="options-content">		
-		<label>
-			<input id="ShowGoogleLogo" class="refresh-on-change" type="checkbox" />
-			Google Logo
-		</label>
-		<label>
-			<input id="ShowSearchBar" class="refresh-on-change" type="checkbox" />
-			Search Bar
-		</label>
-		<label>
-			<input id="ShowPages" class="refresh-on-change" type="checkbox" />
-			Recently Viewed Pages
-		</label>
-		<label>
-			<input id="ShowInfo" class="refresh-on-change" type="checkbox" />
-			Events
-		</label>
-		<div id="hr"></div>
-		<label style="padding-bottom: 10px">
-			Select a local file: 
-			<input id="BrowseImage" type="file" value="Browse" />
-		</label>
-		<label>
-			Background Image URL:
-			<input id="BgImage" type="text" />	
-			<input id="ApplyBgImage" type="button" value="Apply" />
-		</label>
-		<label id="slider">
-			Recently Viewed Pages Opacity:
-			<input id="Opacity" class="refresh-on-change" type="range" />
-		</label>
+	<div class="mdl-card__supporting-text">
+		<div class="options-container mdl-card__actions">
+			<span class="header">Tab Content</span>
+			<div class="body checkboxes">
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-plus-checkbox">
+					<input type="checkbox" id="show-plus-checkbox" class="mdl-checkbox__input refresh-on-change" />
+					<span class="mdl-checkbox__label">Google Plus</span>
+				</label>
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-logo-checkbox">
+					<input type="checkbox" id="show-logo-checkbox" class="refresh-on-change mdl-checkbox__input" />
+					<span class="mdl-checkbox__label">Logo</span>
+				</label>
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-search-checkbox">
+					<input type="checkbox" id="show-search-checkbox" class="refresh-on-change mdl-checkbox__input" />
+					<span class="mdl-checkbox__label">Search</span>
+				</label>
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-pages-checkbox">
+					<input type="checkbox" id="show-pages-checkbox" class="refresh-on-change mdl-checkbox__input" />
+					<span class="mdl-checkbox__label">Recent Pages</span>
+				</label>
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-info-checkbox">
+					<input type="checkbox" id="show-info-checkbox" class="refresh-on-change mdl-checkbox__input" />
+					<span class="mdl-checkbox__label">Events</span>
+				</label>
+			</div>
+		</div>
+		<div class="options-container mdl-card__actions mdl-card--border">
+			<span class="header">Recent Pages Opacity</span>
+			<div class="body">
+				<input id="Opacity" class="refresh-on-change mdl-slider mdl-js-slider" type="range" min="0" max="100" value="100" tabindex="0" />
+			</div>
+		</div>
+		<div class="options-container mdl-card__actions mdl-card--border">
+			<span class="header">Background Image</span>
+			<div class="body background">
+				<button id="clear-bg-button" class="mdl-button mdl-js-button mdl-button--icon">
+  					<i class="material-icons">clear</i>
+				</button>
+				<div class="mdl-tooltip" for="clear-bg-button">
+					Clear Background
+				</div>
+				<button id="choose-file-button" class="mdl-button mdl-js-button mdl-button--icon">
+  					<i class="material-icons">computer</i>
+				</button>
+				<div class="mdl-tooltip" for="choose-file-button">
+					Browse Local Images
+				</div>
+				<button id="choose-url-button" class="mdl-button mdl-js-button mdl-button--icon">
+  					<i class="material-icons">web</i>
+				</button>
+				<div class="mdl-tooltip" for="choose-url-button">
+					Enter Image URL
+				</div>
+				<span id="https-required-message">
+					URL must be HTTPS!
+				</span>
+				<div class="mdl-textfield mdl-js-textfield">
+					<input class="mdl-textfield__input" type="text" id="bg-image-text" />
+					<label class="mdl-textfield__label" for="bg-image-text">Enter web address (https):</label>
+				</div>
+				<button id="done-url-button" class="mdl-button mdl-js-button mdl-button--icon" disabled>
+  					<i class="material-icons">done</i>
+				</button>
+				<div id="url-background-tooltip" class="mdl-tooltip" for="done-url-button">
+					Set Background
+				</div>
+				<input id="image-browse-input" type="file" value="Browse" />
+			</div>
+		</div>
+	</div>
+	<div class="mdl-card__menu">
+		<button id="close-x" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" style="color: white">
+			<i class="material-icons">close</i>
+		</button>
 	</div>
 </div>
