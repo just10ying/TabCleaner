@@ -18,15 +18,13 @@ function init() {
 	load_css(CONSTANTS.MDL_CSS_URL);
 	load_css(CONSTANTS.MDL_ICON_CSS_URL);
 	$("body").prepend("<div id='spacer' style='margin-top:10%'></div>");
-	$("html").click(function(event) {
-		// If anywhere outside of the options div is clicked, remove the class "active," which hides the div.
-		if (!$("#options-div").find(event.target).length) {
-			$("#options-div").removeClass("active");
-			var hint = $("#close-div");
-			if ((hint.length > 0) && (hint.css("display") != "none")) hint.remove();
+	$("html").click(function (event) {
+		// If anywhere outside of the options div is clicked, hide the options panel.
+		if (!$("#options-card").find(event.target).length && !$("#settings-icon-div").find(event.target).length) {
+			hideOptions();
 		}
 	});
-	
+
 	create_options_button();
 	show_welcome();
 }
@@ -46,24 +44,24 @@ function load_js(url) {
 }
 
 function create_options_button() {
-	$.ajax(CONSTANTS.OPTIONS_HTML_URL).done(function(data) {
+	$.ajax(CONSTANTS.OPTIONS_HTML_URL).done(function (data) {
 		$("body").first().append(data); // Create a DOM object out of the returned data and append the options panel to the DOM.
+		hideOptions();
 		// Open the options menu when the button is clicked.
-		$("#options-header").click(function(event) {
-			$("#options-div").toggleClass("active");
+		$("#open-settings").click(function (event) {
+			showOptions();
 			if ($("#welcome-div").length) {
 				$("#welcome-div").remove();
-				$("#close-div").show();
-			}
-			else if ($("#close-div").length) {
-				$("#close-div").remove();
 				chrome.storage.sync.set({
 					ShowTutorial: false
 				});
+
 			}
 		});
+		$("#close-button").click(hideOptions);
+		$("#close-x").click(hideOptions);
 		// Save and refresh the DOM whenever the value changes.
-		$(".refresh-on-change").change(function() {
+		$(".refresh-on-change").change(function () {
 			save_options();
 			restore_options();
 		});
@@ -78,25 +76,25 @@ function create_options_button() {
 			}
 		});
 		// Pressing "apply" also refreshes the DOM.
-		$("#ApplyBgImage").click(function() {
+		$("#ApplyBgImage").click(function () {
 			save_options();
 			restore_options();
 		});
 		// When the user selects a local image:
-		$("#BrowseImage").change(function(evt) {
+		$("#BrowseImage").change(function (evt) {
 			// From Stackoverflow
 			var tgt = evt.target || window.event.srcElement;
-        	var files = tgt.files;
-			
+			var files = tgt.files;
+
 			if (FileReader && files && files.length) {
-		        var fr = new FileReader();
-		        fr.onload = function () {
+				var fr = new FileReader();
+				fr.onload = function () {
 					$("html").first().css("background-image", "url('" + fr.result + "')");
 					$("#BgImage").val(CONSTANTS.LOCAL_IMAGE_STRING); // Remember that the user selected a local image.
 					save_options();
-		        }
-		        fr.readAsDataURL(files[0]);
-		    }	
+				}
+				fr.readAsDataURL(files[0]);
+			}
 		});
 		restore_options(); // Restore user's previous options.
 	});
@@ -109,7 +107,7 @@ function save_options() {
 		var cssBgString = $("html").first().css("background-image");
 		bgValue = cssBgString.substring(4, cssBgString.length - 1); // Remove "url(' and the the ending )
 	}
-	
+
 	chrome.storage.local.set({
 		ShowPlus: document.getElementById("ShowPlus").checked,
 		ShowGoogleLogo: document.getElementById("ShowGoogleLogo").checked,
@@ -131,13 +129,13 @@ function restore_options() {
 		ShowInfo: true,
 		VisitedOpacity: 1,
 		BgImagePath: ""
-	}, function(items) {
+	}, function (items) {
 		// Restore Preferences
 		var bgValue = items.BgImagePath;
 		if (bgValue.indexOf("data:image") != -1) {
 			bgValue = CONSTANTS.LOCAL_IMAGE_STRING;
 		}
-		
+
 		document.getElementById("ShowPlus").checked = items.ShowPlus;
 		document.getElementById("ShowGoogleLogo").checked = items.ShowGoogleLogo;
 		document.getElementById("ShowSearchBar").checked = items.ShowSearchBar;
@@ -148,14 +146,14 @@ function restore_options() {
 		
 		// Hide requested items.
 		if (items.ShowPlus) $("#mngb").show();
-			else $("#mngb").hide();
+		else $("#mngb").hide();
 		if (items.ShowSearchBar) $("#f").show();
-			else $("#f").hide();
+		else $("#f").hide();
 		if (items.ShowPages) $("#most-visited").show();
-			else $("#most-visited").hide();
+		else $("#most-visited").hide();
 		if (items.ShowInfo) $("#prm-pt").hide();
-			else $("#prm-pt").hide();
-			
+		else $("#prm-pt").hide();
+
 		if (items.ShowGoogleLogo) {
 			$("#lga").show();
 			$("#spacer").hide();
@@ -163,7 +161,7 @@ function restore_options() {
 		else {
 			$("#lga").hide();
 			$("#spacer").show();
-			
+
 		}
 
 		// Set background image:
@@ -172,7 +170,7 @@ function restore_options() {
 			var initialLength = $("body").first().css("background").length;
 			// Chrome will set a white background a certain time AFTER document ready for some reason.
 			// This setInterval is meant to determine once Chrome has set this white background and to undo its effects.
-			var bgCheck = setInterval(function() {
+			var bgCheck = setInterval(function () {
 				if ($("body").first().css("background").length != self.initialLength) {
 					$("body").first().css("background", "rgba(0,0,0,0)");
 					clearInterval(self.bgCheck);
@@ -184,7 +182,7 @@ function restore_options() {
 		else {
 			$("html").first().css("background-image", "");
 		}
-		
+
 		$("#most-visited").css("opacity", items.VisitedOpacity);
 	});
 }
@@ -192,14 +190,13 @@ function restore_options() {
 function show_welcome() {
 	chrome.storage.sync.get({
 		ShowTutorial: true
-	}, function(items) {
-		if (items.ShowTutorial || true) {
+	}, function (items) {
+		if (items.ShowTutorial) {
 			// Load welcome module.
-			$.ajax(CONSTANTS.WELCOME_HTML_URL).done(function(data) {
+			$.ajax(CONSTANTS.WELCOME_HTML_URL).done(function (data) {
 				$("body").first().append($(data));
-				$("#close-div").hide();
-				$(".cleaner-close-button").click(function() {
-					$(".cleaner-hint").fadeOut().promise().done(function() {
+				$(".cleaner-close-button").click(function () {
+					$(".cleaner-hint").fadeOut().promise().done(function () {
 						$(".cleaner-hint").remove();
 					});
 					chrome.storage.sync.set({
@@ -209,4 +206,12 @@ function show_welcome() {
 			});
 		}
 	});
+}
+
+function showOptions() {
+	$("#options-card").addClass("active");
+}
+
+function hideOptions() {
+	$("#options-card").removeClass("active");
 }

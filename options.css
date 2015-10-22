@@ -3,81 +3,69 @@ html {
 	overflow: hidden;
 }
 
-#options-div {
-	text-align: left;
-	height: 300px;
-	width: 400px;
+#settings-icon-div {
 	position: absolute;
-	right: -245px;
-	bottom: -260px;
-	cursor: default;
-	transition: .2s;
-	opacity: 0;
-	font: 12px verdana;
-}
-
-#options-header {
-	height: 40px;
-	width: 400px;
-	background-color: #262626;
-	color: white;
-	font-weight: bold;
-}
-
-#header-text {
-	display: table-cell;
-	vertical-align: middle;
-	height: 40px;
-	padding-left: 10px;
-}
-
-#options-content {
-	height: 260px;
-	background-color: #F2F2F2;
 	padding: 10px;
-	color: #262626;
+	bottom: 0;
+	right: 0;
+	
+	opacity: 0;
+	transition: .3s;
 }
 
-#options-content #hr {
-	height: 0;
-	margin: 15px 0;
-	content: '';
-	border-bottom: 1px solid #999;
+/*Override MDL button color:*/
+#settings-icon-div > .mdl-button--fab.mdl-button--colored {
+	background-color: rgb(63,81,181);
 }
 
-#options-content label {
-	display: block;
-	position: relative;
-}
-
-#options-content input {
-  vertical-align: middle;
-}
-
-#options-content #slider {
-  margin-top: 5px;
-}
-
-#options-content #browse-image {
-	width: 95%;
-}
-
-#options-content #BgImage {
-	width: 80%;
-}
-
-#options-content #ApplyBgImage {
-	width: 15%;
-}
-
-#options-div:hover {
+#settings-icon-div:hover {
 	opacity: 1;
 }
 
-#options-div.active {
-	bottom: 0px;
-	right: 20px;
-	opacity: 1;
+#settings-layout-wrapper > .mdl-layout__container {
+	position: absolute;
+	right: 10px;
+	bottom: 0;
+}
+
+#options-card {
+	position: absolute;
+	bottom: -1000px;
+	right: 10px;
+	text-align: left;
+	width: 350px;
+	
+	transition: .3s;
+}
+
+#options-card.active {
+	bottom: 0;
+}
+
+#options-card #close-x {
+	color: white;
+}
+
+#options-card .mdl-card__title {
+	background-color: rgb(63,81,181);
+	color: white;
+}
+
+#options-card .options-container {
+	padding: 5px 0;
+	margin: 0;
+}
+
+#options-card .options-container:not(:last-of-type) {
+	border-bottom: 1px solid #686868;
+}
+
+#options-card #BrowseImage {
+	display: none;
+}
+
+#options-card .options-container .bg-text-input {
+	margin: -15px 0 15px 0;
 }
 
 /* ------------------------------------------------------------------------------- */
@@ -91,7 +79,7 @@ html {
 	cursor: default;
 }
 
-#welcome-div, #close-div {
+#welcome-div {
 	text-align: left;
 	position: absolute;
 }
@@ -101,16 +89,11 @@ html {
 	bottom: 100px;
 }
 
-#close-div {
-	right: 50px;
-	bottom: 350px;
-}
-
 /* ------------------------------------------------------------------------------- */
 .cleaner-hint.mdl-card {
 	text-align: left;
 }
 
-.cleaner-hint.mdl-card a:hover {
+.mdl-card a:hover {
 	text-decoration: none;
 }

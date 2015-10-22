@@ -1,43 +1,69 @@
-﻿<div id="options-div" class="unselectable">
-	<div id="options-header">
-		<div id="header-text">Tab Cleaner Options</div>
+﻿<div id="settings-icon-div">
+	<button id="open-settings" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+		<i class="material-icons">settings</i>
+	</button>
+</div>
+
+<div id="options-card" class="demo-card-wide mdl-card mdl-shadow--2dp unselectable">
+	<div class="mdl-card__title">
+		<h2 class="mdl-card__title-text">Settings</h2>
 	</div>
-
-	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ShowPlus">
-  		<input type="checkbox" id="ShowPlus" class="mdl-checkbox__input refresh-on-change" />
-		<span class="mdl-checkbox__label">Google Plus</span>
-	</label>
-
-	<div id="options-content">		
-		<label>
-			<input id="ShowGoogleLogo" class="refresh-on-change" type="checkbox" />
-			Google Logo
-		</label>
-		<label>
-			<input id="ShowSearchBar" class="refresh-on-change" type="checkbox" />
-			Search Bar
-		</label>
-		<label>
-			<input id="ShowPages" class="refresh-on-change" type="checkbox" />
-			Recently Viewed Pages
-		</label>
-		<label>
-			<input id="ShowInfo" class="refresh-on-change" type="checkbox" />
-			Events
-		</label>
-		<div id="hr"></div>
-		<label style="padding-bottom: 10px">
-			Select a local file: 
+	<div class="mdl-card__supporting-text">
+		<div class="options-container">
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ShowPlus">
+				<input type="checkbox" id="ShowPlus" class="mdl-checkbox__input refresh-on-change" />
+				<span class="mdl-checkbox__label">Google Plus</span>
+			</label>
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ShowGoogleLogo">
+				<input type="checkbox" id="ShowGoogleLogo" class="refresh-on-change mdl-checkbox__input" />
+				<span class="mdl-checkbox__label">Logo</span>
+			</label>
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ShowSearchBar">
+				<input type="checkbox" id="ShowSearchBar" class="refresh-on-change mdl-checkbox__input" />
+				<span class="mdl-checkbox__label">Search</span>
+			</label>
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ShowPages">
+				<input type="checkbox" id="ShowPages" class="refresh-on-change mdl-checkbox__input" />
+				<span class="mdl-checkbox__label">Recent Pages</span>
+			</label>
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ShowInfo">
+				<input type="checkbox" id="ShowInfo" class="refresh-on-change mdl-checkbox__input" />
+				<span class="mdl-checkbox__label">Events</span>
+			</label>
+		</div>
+		<div class="options-container">
+			<div class="bg-text-input">
+				<form>
+					<div class="mdl-textfield mdl-js-textfield">
+						<input class="mdl-textfield__input" type="text" id="BgImage" />
+						<label class="mdl-textfield__label" for="BgImage">Background Image URL...</label>
+					</div>
+				</form>
+			</div>
+			<div class="bg-buttons">
+				<button class="mdl-button mdl-js-button">
+					Choose File
+				</button>
+				<button id="ApplyBgImage" class="mdl-button mdl-js-button">
+					Apply
+				</button>
+			</div>
 			<input id="BrowseImage" type="file" value="Browse" />
-		</label>
-		<label>
-			Background Image URL:
-			<input id="BgImage" type="text" />	
-			<input id="ApplyBgImage" type="button" value="Apply" />
-		</label>
-		<label id="slider">
-			Recently Viewed Pages Opacity:
-			<input id="Opacity" class="refresh-on-change" type="range" />
-		</label>
+		</div>
+		<div class="options-container">
+			<span>Recent Pages Opacity</span>
+			<input id="Opacity" class="refresh-on-change mdl-slider mdl-js-slider" type="range" min="0" max="100" value="100" tabindex="0"
+			/>
+		</div>
+	</div>
+	<div class="mdl-card__actions mdl-card--border">
+		<a id="close-button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+      		Close
+    	</a>
+	</div>
+	<div class="mdl-card__menu">
+		<button id="close-x" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" style="color: white">
+			<i class="material-icons">close</i>
+		</button>
 	</div>
 </div>
