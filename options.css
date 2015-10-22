@@ -4,6 +4,7 @@ html {
 }
 
 #options-div {
+	text-align: left;
 	height: 300px;
 	width: 400px;
 	position: absolute;
@@ -91,12 +92,8 @@ html {
 }
 
 #welcome-div, #close-div {
+	text-align: left;
 	position: absolute;
-	width: 220px;
-	padding: 10px;
-	color: white;
-	background-color: #262626;
-	display: none;
 }
 
 #welcome-div {
@@ -105,20 +102,15 @@ html {
 }
 
 #close-div {
-	right: 300px;
-	bottom: 300px;
+	right: 50px;
+	bottom: 350px;
 }
 
-.cleaner-close-button {
-	cursor: pointer;
-	float: right;
-	height: 15px;
-	width: 15px;
-	padding-left: 5px;
-	padding-bottom: 5px;
-	margin-right: -12px;
-	margin-top: -10px;
-	color: white;
-	border-left: 1px solid #F2F2F2;
-	border-bottom: 1px solid #F2F2F2;
+/* ------------------------------------------------------------------------------- */
+.cleaner-hint.mdl-card {
+	text-align: left;
+}
+
+.cleaner-hint.mdl-card a:hover {
+	text-decoration: none;
 }

@@ -2,7 +2,10 @@
 var CONSTANTS = {
 	OPTIONS_HTML_URL: chrome.extension.getURL("options.html"),
 	WELCOME_HTML_URL: chrome.extension.getURL("welcome.html"),
-	CSS_URL: chrome.extension.getURL("options.css"),
+	CLEANER_CSS_URL: chrome.extension.getURL("options.css"),
+	JQUERY_JS_URL: chrome.extension.getURL('third_party/jquery.js'),
+	MDL_ICON_CSS_URL: chrome.extension.getURL("third_party/icon.css"),
+	MDL_CSS_URL: chrome.extension.getURL("third_party/material.css"),
 	LOCAL_IMAGE_STRING: "Local Image"
 };
 
@@ -10,7 +13,10 @@ var CONSTANTS = {
 init();
 
 function init() {
-	load_css(CONSTANTS.CSS_URL);
+	load_js(CONSTANTS.JQUERY_JS_URL);
+	load_css(CONSTANTS.CLEANER_CSS_URL);
+	load_css(CONSTANTS.MDL_CSS_URL);
+	load_css(CONSTANTS.MDL_ICON_CSS_URL);
 	$("body").prepend("<div id='spacer' style='margin-top:10%'></div>");
 	$("html").click(function(event) {
 		// If anywhere outside of the options div is clicked, remove the class "active," which hides the div.
@@ -33,9 +39,15 @@ function load_css(url) {
 	document.head.appendChild(link);
 }
 
+function load_js(url) {
+	var javascript = document.createElement("script");
+	javascript.setAttribute("src", url);
+	document.head.appendChild(javascript);
+}
+
 function create_options_button() {
 	$.ajax(CONSTANTS.OPTIONS_HTML_URL).done(function(data) {
-		$("html").first().append(data); // Create a DOM object out of the returned data and append the options panel to the DOM.
+		$("body").first().append(data); // Create a DOM object out of the returned data and append the options panel to the DOM.
 		// Open the options menu when the button is clicked.
 		$("#options-header").click(function(event) {
 			$("#options-div").toggleClass("active");
@@ -181,13 +193,15 @@ function show_welcome() {
 	chrome.storage.sync.get({
 		ShowTutorial: true
 	}, function(items) {
-		if (items.ShowTutorial) {
+		if (items.ShowTutorial || true) {
 			// Load welcome module.
 			$.ajax(CONSTANTS.WELCOME_HTML_URL).done(function(data) {
-				$("html").first().append($(data));
-				$("#welcome-div").show();
+				$("body").first().append($(data));
+				$("#close-div").hide();
 				$(".cleaner-close-button").click(function() {
-					$(".cleaner-hint").remove();
+					$(".cleaner-hint").fadeOut().promise().done(function() {
+						$(".cleaner-hint").remove();
+					});
 					chrome.storage.sync.set({
 						ShowTutorial: false
 					});
