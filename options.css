@@ -59,25 +59,29 @@ html {
 	color: white;
 }
 
-#options-card .options-container {
-	padding: 5px 0;
-	margin: 0;
+#options-card .mdl-card__supporting-text {
+	padding: 10px;
+}
+
+#options-card .options-container .body {
+	margin-left: 10px;
+}
+
+#options-card .options-container .body.checkboxes {
+	margin-top: 5px;
+}
+
+#options-card .options-container .body.background .mdl-textfield {
+	width: auto;
 }
 
 #options-card .options-container .header {
-	margin: auto;
-}
-
-#options-card .options-container:not(:last-of-type) {
-	border-bottom: 1px solid #888888;
+	font-size: 115%;
+	margin-left: -5px;
 }
 
 #options-card #image-browse-input {
 	display: none;
-}
-
-#options-card .options-container .bg-text-input {
-	/*margin: -15px 0 15px 0;*/
 }
 
 /* ------------------------------------------------------------------------------- */
@@ -92,24 +96,22 @@ html {
 }
 
 #welcome-div {
-	text-align: left;
 	position: absolute;
-}
-
-#welcome-div {
 	right: 10px;
 	bottom: 10px;
+	
+	text-align: left;
 }
 
 /* ------------------------------------------------------------------------------- */
+.mdl-card a:hover {
+	text-decoration: none;
+}
+
 .cleaner-hint.mdl-card {
 	text-align: left;
 }
 
 .cleaner-hint .cleaner-close-button > a {
 	float: right;
-}
-
-.mdl-card a:hover {
-	text-decoration: none;
 }

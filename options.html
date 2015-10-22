@@ -9,57 +9,50 @@
 		<h2 class="mdl-card__title-text">Settings</h2>
 	</div>
 	<div class="mdl-card__supporting-text">
-		<div class="options-container">
+		<div class="options-container mdl-card__actions">
 			<span class="header">Tab Content</span>
-			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-plus-checkbox">
-				<input type="checkbox" id="show-plus-checkbox" class="mdl-checkbox__input refresh-on-change" />
-				<span class="mdl-checkbox__label">Google Plus</span>
-			</label>
-			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-logo-checkbox">
-				<input type="checkbox" id="show-logo-checkbox" class="refresh-on-change mdl-checkbox__input" />
-				<span class="mdl-checkbox__label">Logo</span>
-			</label>
-			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-search-checkbox">
-				<input type="checkbox" id="show-search-checkbox" class="refresh-on-change mdl-checkbox__input" />
-				<span class="mdl-checkbox__label">Search</span>
-			</label>
-			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-pages-checkbox">
-				<input type="checkbox" id="show-pages-checkbox" class="refresh-on-change mdl-checkbox__input" />
-				<span class="mdl-checkbox__label">Recent Pages</span>
-			</label>
-			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-info-checkbox">
-				<input type="checkbox" id="show-info-checkbox" class="refresh-on-change mdl-checkbox__input" />
-				<span class="mdl-checkbox__label">Events</span>
-			</label>
+			<div class="body checkboxes">
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-plus-checkbox">
+					<input type="checkbox" id="show-plus-checkbox" class="mdl-checkbox__input refresh-on-change" />
+					<span class="mdl-checkbox__label">Google Plus</span>
+				</label>
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-logo-checkbox">
+					<input type="checkbox" id="show-logo-checkbox" class="refresh-on-change mdl-checkbox__input" />
+					<span class="mdl-checkbox__label">Logo</span>
+				</label>
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-search-checkbox">
+					<input type="checkbox" id="show-search-checkbox" class="refresh-on-change mdl-checkbox__input" />
+					<span class="mdl-checkbox__label">Search</span>
+				</label>
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-pages-checkbox">
+					<input type="checkbox" id="show-pages-checkbox" class="refresh-on-change mdl-checkbox__input" />
+					<span class="mdl-checkbox__label">Recent Pages</span>
+				</label>
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-info-checkbox">
+					<input type="checkbox" id="show-info-checkbox" class="refresh-on-change mdl-checkbox__input" />
+					<span class="mdl-checkbox__label">Events</span>
+				</label>
+			</div>
 		</div>
-		<div class="options-container">
-			<div class="bg-text-input">
-				<span class="header">Background Image</span>
+		<div class="options-container mdl-card__actions mdl-card--border">
+			<span class="header">Recent Pages Opacity</span>
+			<div class="body">
+				<input id="Opacity" class="refresh-on-change mdl-slider mdl-js-slider" type="range" min="0" max="100" value="100" tabindex="0" />
+			</div>
+		</div>
+		<div class="options-container mdl-card__actions mdl-card--border">
+			<span class="header">Background Image</span>
+			<div class="body background">
+				<button id="choose-file-button" class="mdl-button mdl-js-button">
+					Browse
+				</button>
 				<div class="mdl-textfield mdl-js-textfield">
 					<input class="mdl-textfield__input" type="text" id="bg-image-text" />
 					<label class="mdl-textfield__label" for="bg-image-text"></label>
 				</div>
+				<input id="image-browse-input" type="file" value="Browse" />
 			</div>
-			<div class="bg-buttons">
-				<button id="choose-file-button" class="mdl-button mdl-js-button">
-					Choose File
-				</button>
-				<button id="apply-bg-image" class="mdl-button mdl-js-button">
-					Apply
-				</button>
-			</div>
-			<input id="image-browse-input" type="file" value="Browse" />
 		</div>
-		<div class="options-container">
-			<span class="header">Recent Pages Opacity</span>
-			<input id="Opacity" class="refresh-on-change mdl-slider mdl-js-slider" type="range" min="0" max="100" value="100" tabindex="0"
-			/>
-		</div>
-	</div>
-	<div class="mdl-card__actions mdl-card--border">
-		<a id="close-button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-      		Close
-    	</a>
 	</div>
 	<div class="mdl-card__menu">
 		<button id="close-x" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect" style="color: white">

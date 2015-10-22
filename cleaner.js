@@ -63,18 +63,18 @@ function createOptionsButton() {
 		$("#choose-file-button").click(selectLocalImage);
 		$("#apply-bg-image").click(applyBgImage);
 		// Save and refresh the DOM whenever the value changes.
-		$(".refresh-on-change").change(function () {
+		$(".refresh-on-change").change(function() {
 			saveOptions();
 			restoreOptions();
 		});
 		// Allow the user to press enter to reload a custom image
-		$("#bg-image-text").keyup(function (e) {
-			if (e.keyCode == 13) { // Enter automatically refreshes the DOM.
-				saveOptions();
-				restoreOptions();
-			}
+		$("#bg-image-text").keyup(function(e) {
 			if (e.keyCode == 27) {
 				$("#bg-image-text").val("");
+			}
+			else if (e.keyCode == 13) {
+				saveOptions();
+				restoreOptions();
 			}
 		});
 		// Pressing "apply" also refreshes the DOM.
