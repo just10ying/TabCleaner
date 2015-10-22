@@ -91,7 +91,6 @@ html {
 /*FIX THIS: ARBITRARY PADDING.  CENTER PROPERLY*/
 #options-card.active.full #https-required-message {
 	display: inline;
-	float: right;
 	padding-top: 8px; 
 	color: red;
 }

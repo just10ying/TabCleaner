@@ -15,10 +15,14 @@ var CONSTANTS = {
 init();
 
 function init() {
+	clearBodyBackground();
 	loadJavascript(CONSTANTS.JQUERY_JS_URL);
 	loadCSS(CONSTANTS.CLEANER_CSS_URL);
 	loadCSS(CONSTANTS.MDL_CSS_URL);
 	loadCSS(CONSTANTS.MDL_ICON_CSS_URL);
+	createOptionsButton();
+	showWelcome();
+	
 	$("body").prepend("<div id='spacer' style='margin-top:10%'></div>");
 	$("html").click(function(event) {
 		// If anywhere outside of the options div is clicked, hide the options panel.
@@ -26,68 +30,35 @@ function init() {
 			hideOptions();
 		}
 	});
-
-	createOptionsButton();
-	showWelcome();
-}
-
-function loadCSS(url) {
-	var link = document.createElement("link");
-	link.setAttribute("rel", "stylesheet");
-	link.setAttribute("type", "text/css");
-	link.setAttribute("href", url);
-	document.head.appendChild(link);
-}
-
-function loadJavascript(url) {
-	var javascript = document.createElement("script");
-	javascript.setAttribute("src", url);
-	document.head.appendChild(javascript);
 }
 
 function createOptionsButton() {
 	$.ajax(CONSTANTS.OPTIONS_HTML_URL).done(function (data) {
 		$("body").first().append(data); // Create a DOM object out of the returned data and append the options panel to the DOM.
-		hideOptions();
-		// Open the options menu when the button is clicked.
-		$("#open-settings").click(function (event) {
-			showOptions();
-			if ($("#welcome-div").length) {
-				$("#welcome-div").remove();
-				chrome.storage.sync.set({
-					ShowTutorial: false
-				});
-			}
-		});
+		
+		$("#open-settings").click(showOptions);
 		$("#close-button").click(hideOptions);
 		$("#close-x").click(hideOptions);
 		$("#choose-file-button").click(selectLocalImage);
-		$("#apply-bg-image").click(applyBgImage); // Pressing "apply" also refreshes the DOM.
+		$(".refresh-on-change").change(reapplySettings);
+		$("#choose-url-button").click(showURLOptions);
 		$("#clear-bg-button").click(function() {
 			$("#bg-image-text").val("");
 			hideURLOptions();
-			applyBgImage();
-		});
-		$("#choose-url-button").click(function() {
-			showURLOptions();
+			reapplySettings();
 		});
 		$("#done-url-button").click(function() {
 			hideURLOptions();
-			applyBgImage();
+			reapplySettings();
 		});
-		// Save and refresh the DOM whenever the value changes.
-		$(".refresh-on-change").change(function() {
-			saveOptions();
-			restoreOptions();
-		});
+		
 		// Allow the user to press enter to reload a custom image
 		$("#bg-image-text").keyup(function(e) {
 			if (e.keyCode == 27) {
 				$("#bg-image-text").val("");
 			}
 			else if (e.keyCode == 13) {
-				saveOptions();
-				restoreOptions();
+				reapplySettings();
 			}
 			// Check if https:
 			if ($("#bg-image-text").val().indexOf("https://") < 0) {
@@ -99,6 +70,7 @@ function createOptionsButton() {
 				$("#https-required-message").hide();
 			}
 		});
+		
 		// When the user selects a local image:
 		$("#image-browse-input").change(function (evt) {
 			// From Stackoverflow
@@ -115,7 +87,9 @@ function createOptionsButton() {
 				fr.readAsDataURL(files[0]);
 			}
 		});
+		
 		restoreOptions(); // Restore user's previous options.
+		hideOptions(); // Option menu is hidden, initially.
 	});
 }
 
@@ -133,7 +107,7 @@ function saveOptions() {
 		ShowSearchBar: document.getElementById("show-search-checkbox").checked,
 		ShowPages: document.getElementById("show-pages-checkbox").checked,
 		ShowInfo: document.getElementById("show-info-checkbox").checked,
-		VisitedOpacity: document.getElementById("Opacity").value / 100,
+		VisitedOpacity: document.getElementById("opacity-slider").value / 100,
 		BgImagePath: bgValue
 	});
 }
@@ -150,17 +124,14 @@ function restoreOptions() {
 		BgImagePath: ""
 	}, function (items) {
 		// Restore Preferences
-		var bgValue = items.BgImagePath;
-		if (bgValue.indexOf("data:image") != -1) {
-			bgValue = CONSTANTS.LOCAL_IMAGE_STRING;
-		}
+		var bgValue = items.BgImagePath.indexOf("data:image") == -1 ? items.BgImagePath : CONSTANTS.LOCAL_IMAGE_STRING; 
 
 		document.getElementById("show-plus-checkbox").checked = items.ShowPlus;
 		document.getElementById("show-logo-checkbox").checked = items.ShowGoogleLogo;
 		document.getElementById("show-search-checkbox").checked = items.ShowSearchBar;
 		document.getElementById("show-pages-checkbox").checked = items.ShowPages;
 		document.getElementById("show-info-checkbox").checked = items.ShowInfo;
-		document.getElementById("Opacity").value = items.VisitedOpacity * 100;
+		document.getElementById("opacity-slider").value = items.VisitedOpacity * 100;
 		document.getElementById("bg-image-text").value = bgValue;
 		
 		// Hide requested items.
@@ -182,37 +153,9 @@ function restoreOptions() {
 			$("#spacer").show();
 		}
 
-		// Set background image:
-		if (items.BgImagePath.length != 0) {
-			var self = this;
-			var initialLength = $("body").first().css("background").length;
-			// Chrome will set a white background a certain time AFTER document ready for some reason.
-			// This setInterval is meant to determine once Chrome has set this white background and to undo its effects.
-			var bgCheck = setInterval(function () {
-				if ($("body").first().css("background").length != self.initialLength) {
-					$("body").first().css("background", "rgba(0,0,0,0)");
-					clearInterval(self.bgCheck);
-				}
-			}, 50);
-			$("html").first().css("background-image", "url('" + items.BgImagePath + "')");
-			$("html").first().css("background-size", "cover");
-		}
-		else {
-			$("html").first().css("background-image", "");
-		}
-
+		setBackgroundImage(items.BgImagePath);
 		$("#most-visited").css("opacity", items.VisitedOpacity);
 	});
-}
-
-function selectLocalImage() {
-	hideURLOptions();
-	$("#image-browse-input").trigger("click");
-}
-
-function applyBgImage() {
-	saveOptions();
-	restoreOptions();
 }
 
 function showWelcome() {
@@ -236,8 +179,62 @@ function showWelcome() {
 	});
 }
 
+function reapplySettings() {
+	saveOptions();
+	restoreOptions();
+}
+
+/* -------------------------------- Resource Loading Functions  -------------------------------- */
+
+function loadCSS(url) {
+	var link = document.createElement("link");
+	link.setAttribute("rel", "stylesheet");
+	link.setAttribute("type", "text/css");
+	link.setAttribute("href", url);
+	document.head.appendChild(link);
+}
+
+function loadJavascript(url) {
+	var javascript = document.createElement("script");
+	javascript.setAttribute("src", url);
+	document.head.appendChild(javascript);
+}
+
+/* -------------------------------- Background Handling -------------------------------- */
+
+// Chrome will set a white background a certain time AFTER document ready for some reason.
+function clearBodyBackground() {
+	var self = this;
+	var initialLength = $("body").first().css("background").length;
+	// This setInterval is meant to determine once Chrome has set this white background and to undo its effects.
+	var bgCheck = setInterval(function () {
+		if ($("body").first().css("background").length != self.initialLength) {
+			$("body").first().css("background", "rgba(0,0,0,0)");
+			clearInterval(self.bgCheck);
+		}
+	}, 50);
+}
+
+function setBackgroundImage(imagePath) {
+	$("html").first().css("background-image", "url('" + imagePath + "')");
+	$("html").first().css("background-size", "cover");
+}
+
+function selectLocalImage() {
+	hideURLOptions();
+	$("#image-browse-input").trigger("click");
+}
+
+/* -------------------------------- Hiding and showing -------------------------------- */
+
 function showOptions() {
 	$("#options-card").addClass("active");
+	if ($("#welcome-div").length) {
+		$("#welcome-div").remove();
+		chrome.storage.sync.set({
+			ShowTutorial: false
+		});
+	}
 }
 
 function hideOptions() {
