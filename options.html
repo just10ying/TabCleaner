@@ -37,30 +37,21 @@
 		<div class="options-container mdl-card__actions mdl-card--border">
 			<span class="header">Recent Pages Opacity</span>
 			<div class="body">
-				<input id="opacity-slider" class="refresh-on-change mdl-slider mdl-js-slider" type="range" min="0" max="100" value="100" tabindex="0" />
+				<input id="opacity-slider" class="mdl-slider mdl-js-slider" type="range" min="0" max="100" value="100" tabindex="0" />
 			</div>
 		</div>
 		<div class="options-container mdl-card__actions mdl-card--border">
 			<span class="header">Background Image</span>
 			<div class="body background">
-				<button id="clear-bg-button" class="mdl-button mdl-js-button mdl-button--icon">
+				<button id="clear-bg-button" class="mdl-button mdl-js-button mdl-button--icon" title="Clear Background">
   					<i class="material-icons">clear</i>
 				</button>
-				<div class="mdl-tooltip" for="clear-bg-button">
-					Clear Background
-				</div>
-				<button id="choose-file-button" class="mdl-button mdl-js-button mdl-button--icon">
+				<button id="choose-file-button" class="mdl-button mdl-js-button mdl-button--icon" title="Browse Local Images">
   					<i class="material-icons">computer</i>
 				</button>
-				<div class="mdl-tooltip" for="choose-file-button">
-					Browse Local Images
-				</div>
-				<button id="choose-url-button" class="mdl-button mdl-js-button mdl-button--icon">
+				<button id="choose-url-button" class="mdl-button mdl-js-button mdl-button--icon" title="Enter Image URL">
   					<i class="material-icons">web</i>
 				</button>
-				<div class="mdl-tooltip" for="choose-url-button">
-					Enter Image URL
-				</div>
 				<span id="https-required-message">
 					URL must be HTTPS!
 				</span>
@@ -68,12 +59,9 @@
 					<input class="mdl-textfield__input" type="text" id="bg-image-text" />
 					<label class="mdl-textfield__label" for="bg-image-text">Enter web address (https):</label>
 				</div>
-				<button id="done-url-button" class="mdl-button mdl-js-button mdl-button--icon" disabled>
+				<button id="done-url-button" class="mdl-button mdl-js-button mdl-button--icon" title="Set Background" disabled>
   					<i class="material-icons">done</i>
 				</button>
-				<div id="url-background-tooltip" class="mdl-tooltip" for="done-url-button">
-					Set Background
-				</div>
 				<input id="image-browse-input" type="file" value="Browse" />
 			</div>
 		</div>

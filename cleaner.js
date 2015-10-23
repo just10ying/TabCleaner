@@ -51,6 +51,9 @@ function createOptionsButton() {
 			hideURLOptions();
 			reapplySettings();
 		});
+		$("#opacity-slider")[0].oninput = function () {
+   			reapplySettings(); 
+		};
 		
 		// Allow the user to press enter to reload a custom image
 		$("#bg-image-text").keyup(function(e) {
