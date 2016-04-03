@@ -44,10 +44,12 @@ function createOptionsButton() {
 		$("#choose-url-button").click(showURLOptions);
 		$("#clear-bg-button").click(function() {
 			$("#bg-image-text").val("");
+			setBackgroundImage("url('" + $("#bg-image-text").val() + "')");
 			hideURLOptions();
 			reapplySettings();
 		});
 		$("#done-url-button").click(function() {
+			setBackgroundImage("url('" + $("#bg-image-text").val() + "')");
 			hideURLOptions();
 			reapplySettings();
 		});
@@ -61,6 +63,7 @@ function createOptionsButton() {
 				$("#bg-image-text").val("");
 			}
 			else if (e.keyCode == 13) {
+				setBackgroundImage("url('" + $("#bg-image-text").val() + "')");
 				reapplySettings();
 			}
 			// Check if https:
@@ -83,7 +86,7 @@ function createOptionsButton() {
 			if (FileReader && files && files.length) {
 				var fr = new FileReader();
 				fr.onload = function () {
-					$("html").first().css("background-image", "url('" + fr.result + "')");
+					setBackgroundImage("url('" + fr.result + "')");
 					$("#bg-image-text").val(CONSTANTS.LOCAL_IMAGE_STRING); // Remember that the user selected a local image.
 					saveOptions();
 				}
@@ -98,12 +101,6 @@ function createOptionsButton() {
 
 // Saves options to chrome.storage
 function saveOptions() {
-	var bgValue = document.getElementById("bg-image-text").value;
-	if (bgValue == CONSTANTS.LOCAL_IMAGE_STRING) {
-		var cssBgString = $("html").first().css("background-image");
-		bgValue = cssBgString.substring(4, cssBgString.length - 1); // Remove "url(' and the the ending )
-	}
-
 	chrome.storage.local.set({
 		ShowPlus: document.getElementById("show-plus-checkbox").checked,
 		ShowGoogleLogo: document.getElementById("show-logo-checkbox").checked,
@@ -111,7 +108,7 @@ function saveOptions() {
 		ShowPages: document.getElementById("show-pages-checkbox").checked,
 		ShowInfo: document.getElementById("show-info-checkbox").checked,
 		VisitedOpacity: document.getElementById("opacity-slider").value / 100,
-		BgImagePath: bgValue
+		BgImageValue: $("html").first().css("background-image")
 	});
 }
 
@@ -124,18 +121,16 @@ function restoreOptions() {
 		ShowPages: true,
 		ShowInfo: true,
 		VisitedOpacity: 1,
-		BgImagePath: ""
+		BgImageValue: 'url("")'
 	}, function (items) {
 		// Restore Preferences
-		var bgValue = items.BgImagePath.indexOf("data:image") == -1 ? items.BgImagePath : CONSTANTS.LOCAL_IMAGE_STRING; 
-
 		document.getElementById("show-plus-checkbox").checked = items.ShowPlus;
 		document.getElementById("show-logo-checkbox").checked = items.ShowGoogleLogo;
 		document.getElementById("show-search-checkbox").checked = items.ShowSearchBar;
 		document.getElementById("show-pages-checkbox").checked = items.ShowPages;
 		document.getElementById("show-info-checkbox").checked = items.ShowInfo;
 		document.getElementById("opacity-slider").value = items.VisitedOpacity * 100;
-		document.getElementById("bg-image-text").value = bgValue;
+		$("html").first().css("background-image", items.BgImageValue);
 		
 		// Hide requested items.
 		if (items.ShowPlus) $("#mngb").show();
@@ -156,7 +151,7 @@ function restoreOptions() {
 			$("#spacer").show();
 		}
 
-		setBackgroundImage(items.BgImagePath);
+		setBackgroundImage(items.BgImageValue);
 		$("#most-visited").css("opacity", items.VisitedOpacity);
 	});
 }
@@ -218,8 +213,8 @@ function clearBodyBackground() {
 	}, 50);
 }
 
-function setBackgroundImage(imagePath) {
-	$("html").first().css("background-image", "url('" + imagePath + "')");
+function setBackgroundImage(imageValue) {
+	$("html").first().css("background-image", imageValue);
 	$("html").first().css("background-size", "cover");
 }
 

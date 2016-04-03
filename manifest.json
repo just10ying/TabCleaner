@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Clean New Tab",
-	"version": "3.0.1",
+	"version": "3.0.2",
 	"permissions": ["storage", "unlimitedStorage"],
 	"description": "Customize Chrome's New Tab Page",
 	"web_accessible_resources": ["options.html", "welcome.html", "options.css", "third_party/material.css", "third_party/icon.css", "third_party/jquery.js"],
