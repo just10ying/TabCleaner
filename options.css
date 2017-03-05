@@ -3,18 +3,6 @@ html {
 	overflow: hidden;
 }
 
-#settings-icon-div {
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	
-	width: 125px;
-	height: 125px;
-	
-	opacity: 0;
-	transition: .3s;
-}
-
 #settings-icon-div #open-settings {
 	position: absolute;
 	bottom: 10px;
